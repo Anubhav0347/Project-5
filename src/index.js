@@ -2,15 +2,17 @@ const express=require('express')
 const bodyParser = require('body-parser');
 const { default: mongoose } = require('mongoose')
 const multer = require ('multer');
-const aws = require ('aws-sdk')
+// const aws = require ('aws-sdk')
 const route=require("./route/route")
-const app= express()
+const app= express();
+const dotenv=require("dotenv");
+dotenv.config();
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use (multer().any())
 
-mongoose.connect("mongodb+srv://sumitnegi:7KtRrUCkTMIMREOm@cluster0.diszcfl.mongodb.net/group30Database?retryWrites=true&w=majority", {useNewUrlParser:true})
+mongoose.connect(process.env.DB_CONNECT, {useNewUrlParser:true})
 .then(()=> console.log("MongoDb is connected"))
 .catch(err => console.log(err))
 
